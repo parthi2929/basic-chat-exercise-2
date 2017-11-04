@@ -1,12 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <% include partials/head.ejs %> 
     <title><%=title%></title>
+    <style>
+        .well
+        {
+            height:300px;
+        }
+        .form-inline .form-group input 
+        {
+            width:590px;
+        }
+    </style>
 </head>
 <body>
-    <h1><%=headline%></h1>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+                <h1 class="text-center"><%=headline%></h1>
+                <div class="well">
+                    <ul id="messageListID"></ul>
+                </div>
+                <form class="form-inline" action="#">
+                    <div class="form-group">
+                    <input type="text" id="newMessage" class="form-control" placeholder="Enter Message">                                                    
+                    </div>                        
+                    <button id="sendButtonID" class="btn btn-primary">Send</button>   
+                </form>
+            </div>
+         </div>
+    </div>    
+
+    <% include partials/jsincludes.ejs %>         
 </body>
 </html>
