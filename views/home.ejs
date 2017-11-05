@@ -20,7 +20,7 @@
                 </div>
                 <form role="form" action="#">
                     <div class="form-group col-xs-8 col-sm-10">
-                            <input type="text" id="newMessage" class="form-control" placeholder="Enter Message">                                                    
+                            <input type="text" id="newMessageID" class="form-control" placeholder="Enter Message">                                                    
                     </div> 
                     <div class="col-xs-4 col-sm-2">                         
                         <button id="sendButtonID" class="btn btn-primary">Send</button> 
@@ -33,7 +33,22 @@
     <% include partials/jsincludes.ejs %>   
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
     <script>
-      var socketFromClient = io();
+      $(document).ready(function()        
+        {
+            var socketFromClient = io();
+
+            $("form").submit(function()     //When form message is submitted..
+                {
+                    socketFromClient.emit(
+                        "New Message Event",    //Emit event name
+                        $("#newMessageID").val()   //the message entered by user
+                    );
+                    $("#newMessageID").val("");  //Empty the text box after sending
+                    return false;               //dont propogate further, submit function in browser
+                }
+            );
+        }
+      );
     </script>      
 </body>
 </html>

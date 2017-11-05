@@ -40,5 +40,13 @@ socketServer.on(
                 console.log("A socket disconnected");
             }
         );
+
+        socketFromClient.on(
+            "New Message Event",    //In case a new message arrives
+            function(newMessage)    //Socket.io provides that new message in cb
+            {
+                console.log("New messagea arrived: " + newMessage);
+            }
+        );
     }
 );
