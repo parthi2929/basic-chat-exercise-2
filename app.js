@@ -37,7 +37,7 @@ socketServer.on(
             "disconnect", //A socket disconnects
             function()
             {
-                console.log("A socket disconnected");
+                console.log("Server: A socket disconnected");
             }
         );
 
@@ -45,7 +45,13 @@ socketServer.on(
             "New Message Event",    //In case a new message arrives
             function(newMessage)    //Socket.io provides that new message in cb
             {
-                console.log("New messagea arrived: " + newMessage);
+                console.log("Server: New message arrived = " + newMessage);
+
+                //Broadcast this to all other clients..
+                socketServer.emit(
+                    "Broadcast Event",
+                    newMessage
+                );
             }
         );
     }

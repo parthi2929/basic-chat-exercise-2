@@ -4,7 +4,7 @@
     <% include partials/head.ejs %> 
     <title><%=title%></title>
     <style>
-        .well
+        .card
         {
             height:300px;
         }
@@ -12,22 +12,36 @@
 </head>
 <body>
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-6 col-sm-offset-3">
+        <div class="row justify-content-center">
+            <div class="col-6 bg-inverse text-white">
                 <h1 class="text-center"><%=headline%></h1>
-                <div class="well">
+                <div class="card card-block bg-faded">
                     <ul id="messageListID"></ul>
                 </div>
+                <br>
                 <form role="form" action="#">
-                    <div class="form-group col-xs-8 col-sm-10">
-                            <input type="text" id="newMessageID" class="form-control" placeholder="Enter Message">                                                    
-                    </div> 
-                    <div class="col-xs-4 col-sm-2">                         
-                        <button id="sendButtonID" class="btn btn-primary">Send</button> 
-                    </div>    
-                </form>
+                    <div class="row">
+                    <div class="col-10">
+                        <input type="text" id="newMessageID" class="form-control mb-2 mr-sm-2 mb-sm-0" placeholder="Enter Message">                                                    
+                    </div>
+                    <div class="col-2">
+                    <button id="sendButtonID" class="btn btn-primary">Send</button> 
+                    </div>
+                    </div>
+                </form><br>
             </div>
+            <div class="col-2 bg-info text-white">
+                Online Users
+              </div>
          </div>
+         <!-- <div class="row justify-content-center">
+            <div class="col-6 bg-inverse text-white">
+              One of two columns
+            </div>
+            <div class="col-2 bg-info text-white">
+              One of two columns
+            </div>
+          </div> -->
     </div>    
 
     <% include partials/jsincludes.ejs %>   
@@ -45,6 +59,17 @@
                     );
                     $("#newMessageID").val("");  //Empty the text box after sending
                     return false;               //dont propogate further, submit function in browser
+                }
+            );
+
+            //In case of any broadcast event from server..
+            socketFromClient.on(
+                "Broadcast Event",
+                function(receivedMessage)
+                {
+                    //update in chat deck   
+                    var newliElement = $("<li>").text(receivedMessage); //construct a li element tag content
+                    $("#messageListID").append(newliElement);           //append to ul in chat deck
                 }
             );
         }
